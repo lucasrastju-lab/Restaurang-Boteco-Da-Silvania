@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boteco da Silvania — Brasiliansk restaurang i Stockholm</title>
+<meta name="description" content="Äkta brasiliansk mat vid Kungsholms strand, Stockholm. Öppet ons–lör 16:30–22:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --green:#1a4a2e;--green-light:#2d6b44;--gold:#c8922a;--gold-light:#f5a623;
+    --cream:#faf6ef;--cream2:#f2ead8;--red:#c0392b;--text:#2c1810;--text2:#5a3e2b;
+  }
+  body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(26,74,46,0.97);backdrop-filter:blur(8px);padding:0 2rem}
+  .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#f5a623;letter-spacing:0.05em;cursor:pointer}
+  .nav-links{display:flex;gap:0;align-items:center}
+  .nav-links a{color:rgba(250,246,239,0.85);font-size:0.75rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;padding:0 0.75rem;cursor:pointer;transition:color 0.2s;text-decoration:none;white-space:nowrap}
+  .nav-links a:hover{color:#f5a623}
+  .nav-book{background:#c8922a!important;color:var(--cream)!important;padding:0.4rem 1rem!important;border-radius:2px;margin-left:0.5rem}
+  .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+  .ham span{display:block;width:22px;height:1.5px;background:var(--cream);transition:0.3s}
+
+  .mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(26,74,46,0.98);z-index:99;padding:1rem 2rem;flex-direction:column;gap:0.1rem}
+  .mobile-menu a{color:rgba(250,246,239,0.85);font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem 0;cursor:pointer;border-bottom:0.5px solid rgba(255,255,255,0.1);text-decoration:none;display:block}
+  .mobile-menu.open{display:flex}
+
+  section{display:none}
+  section.active{display:block}
+
+  .hero{min-height:100vh;background:linear-gradient(160deg,#0d2a1a 0%,#1a4a2e 40%,#2d3a1a 100%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;opacity:0.07}
+  .hero-bg svg{width:100%;height:100%}
+  .hero-content{position:relative;text-align:center;padding:2rem;max-width:700px}
+  .hero-flag{display:flex;justify-content:center;gap:6px;margin-bottom:2rem}
+  .flag-dot{width:8px;height:8px;border-radius:50%}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:400;color:var(--cream);line-height:1.1;letter-spacing:0.02em;margin-bottom:1rem}
+  .hero h1 em{font-style:italic;color:#f5a623}
+  .hero p{font-size:1rem;color:rgba(250,246,239,0.75);font-weight:300;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2.5rem}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:#c8922a;color:var(--cream);padding:0.75rem 2rem;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;font-family:'Outfit',sans-serif;transition:background 0.2s}
+  .btn-primary:hover{background:#f5a623}
+  .btn-secondary{background:transparent;color:var(--cream);padding:0.75rem 2rem;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(250,246,239,0.4);cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s}
+  .btn-secondary:hover{border-color:var(--cream);background:rgba(255,255,255,0.05)}
+  .hours-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.35);padding:1rem 2rem;text-align:center}
+  .hours-bar span{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,246,239,0.8)}
+  .hours-bar strong{color:#f5a623;font-weight:500}
+
+  .page-section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+  .section-tag{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8922a;font-weight:500;margin-bottom:1rem}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--green);line-height:1.2;margin-bottom:1.5rem}
+  .section-body{font-size:1rem;color:var(--text2);line-height:1.8;font-weight:300;max-width:600px}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .about-imgs{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+  .img-placeholder{background:var(--green);border-radius:2px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .img-placeholder:first-child{grid-column:1/-1;aspect-ratio:16/9}
+  .tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--green);border-left:3px solid #c8922a;padding-left:1.2rem;margin-top:2rem;line-height:1.5}
+
+  .info-section{background:#f2ead8}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+  .info-card{background:var(--cream);border-radius:2px;padding:1.75rem;border:0.5px solid rgba(26,74,46,0.15)}
+  .info-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--green);margin-bottom:1rem;font-weight:500}
+  .info-text{font-size:0.9rem;color:var(--text2);line-height:1.5;font-weight:300}
+  .hours-table{width:100%;border-collapse:collapse}
+  .hours-table td{padding:0.35rem 0;font-size:0.9rem;color:var(--text2);font-weight:300}
+  .hours-table td:last-child{text-align:right;color:var(--green);font-weight:500}
+  .hours-table .closed td:last-child{color:var(--red);font-weight:400}
+  .pay-pills{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}
+  .pill{background:rgba(26,74,46,0.08);color:var(--green);font-size:0.75rem;padding:0.25rem 0.7rem;border-radius:1px;letter-spacing:0.05em}
+  .map-placeholder{background:var(--green);height:200px;border-radius:2px;display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;cursor:pointer;transition:opacity 0.2s;text-decoration:none}
+  .map-placeholder:hover{opacity:0.9}
+  .map-placeholder span{color:rgba(250,246,239,0.7);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase}
+
+  .menu-hero{background:var(--green);padding:4rem 2rem;text-align:center}
+  .menu-hero h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--cream);font-weight:400}
+  .menu-hero p{color:rgba(250,246,239,0.7);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.5rem}
+  .menu-nav{background:rgba(26,74,46,0.06);padding:0 2rem;display:flex;justify-content:center;gap:0;border-bottom:1px solid rgba(26,74,46,0.12)}
+  .menu-tab{padding:1rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all 0.2s;font-weight:400}
+  .menu-tab.active,.menu-tab:hover{color:var(--green);border-bottom-color:#c8922a}
+  .menu-content{max-width:800px;margin:0 auto;padding:3rem 2rem}
+  .menu-cat{display:none}
+  .menu-cat.active{display:block}
+  .menu-cat-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--green);margin-bottom:0.5rem;font-weight:400}
+  .menu-cat-sub{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8922a;margin-bottom:2rem}
+  .menu-item{display:flex;justify-content:space-between;align-items:baseline;padding:1rem 0;border-bottom:0.5px solid rgba(26,74,46,0.1)}
+  .menu-item:last-child{border-bottom:none}
+  .menu-item-left h4{font-size:1rem;color:var(--text);font-weight:500;margin-bottom:0.2rem}
+  .menu-item-left p{font-size:0.85rem;color:var(--text2);font-weight:300;font-style:italic}
+  .menu-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--green);font-weight:500;white-space:nowrap;padding-left:1rem}
+  .menu-note{background:rgba(200,146,42,0.1);border-left:3px solid #c8922a;padding:1rem 1.25rem;margin-bottom:2rem;font-size:0.85rem;color:var(--text2);font-style:italic}
+
+  .drinks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem}
+  .drink-card{background:var(--cream);border-radius:2px;padding:1.75rem;border:0.5px solid rgba(26,74,46,0.12)}
+  .drink-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--green);margin-bottom:1.2rem;font-weight:400}
+  .drink-item{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:0.5px solid rgba(26,74,46,0.08);font-size:0.9rem}
+  .drink-item:last-child{border-bottom:none}
+  .drink-name{color:var(--text2);font-weight:300}
+  .drink-price{color:var(--green);font-weight:500}
+  .caipirinha-card{background:var(--green);color:var(--cream)}
+  .caipirinha-card h3{color:#f5a623}
+  .caipirinha-card .drink-name{color:rgba(250,246,239,0.8)}
+  .caipirinha-card .drink-price{color:#f5a623}
+  .caipirinha-card .drink-item{border-bottom-color:rgba(255,255,255,0.1)}
+  .feature-badge{display:inline-block;background:#c8922a;color:var(--cream);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;margin-bottom:0.75rem}
+
+  .wine-partner{background:rgba(26,74,46,0.06);border-left:3px solid #c8922a;padding:1rem 1.25rem;margin-bottom:2rem;font-size:0.9rem;color:var(--text2)}
+  .wine-partner strong{color:var(--green)}
+  .wine-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;margin-top:2rem}
+  .wine-col h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--green);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(26,74,46,0.15)}
+  .wine-entry{padding:0.75rem 0;border-bottom:0.5px solid rgba(26,74,46,0.08)}
+  .wine-entry:last-child{border-bottom:none}
+  .wine-name{font-size:0.95rem;color:var(--text);font-weight:500;margin-bottom:0.2rem}
+  .wine-origin{font-size:0.8rem;color:var(--text2);font-style:italic;margin-bottom:0.3rem;font-weight:300}
+  .wine-prices{display:flex;gap:1rem;font-size:0.85rem}
+  .wine-prices span{color:var(--green)}
+  .wine-prices em{font-style:normal;font-size:0.75rem;color:var(--text2)}
+
+  .buffet-section{background:#1a4a2e}
+  .buffet-section .section-tag{color:#f5a623}
+  .buffet-section .section-title{color:var(--cream)}
+  .buffet-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:2.5rem}
+  .buffet-card{background:rgba(255,255,255,0.06);border:1px solid rgba(250,246,239,0.15);border-radius:2px;padding:2rem;position:relative;overflow:hidden}
+  .buffet-card.featured{background:rgba(200,146,42,0.12);border-color:rgba(200,146,42,0.4)}
+  .buffet-badge{position:absolute;top:0;right:0;background:#c8922a;color:var(--cream);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem}
+  .buffet-card h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--cream);font-weight:400;margin-bottom:0.3rem}
+  .buffet-min{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,246,239,0.5);margin-bottom:1.25rem}
+  .buffet-includes{list-style:none;margin-bottom:1.5rem}
+  .buffet-includes li{font-size:0.9rem;color:rgba(250,246,239,0.75);padding:0.4rem 0 0.4rem 1rem;border-bottom:0.5px solid rgba(255,255,255,0.07);font-weight:300;position:relative}
+  .buffet-includes li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:4px;background:#c8922a;border-radius:50%}
+  .buffet-note{font-size:0.8rem;color:rgba(250,246,239,0.5);font-style:italic;margin-top:1rem}
+  .buffet-btn{display:block;text-align:center;margin-top:1.25rem;background:#c8922a;color:var(--cream);padding:0.75rem;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border:none;width:100%;font-family:'Outfit',sans-serif;transition:background 0.2s}
+  .buffet-btn:hover{background:#f5a623}
+
+  .booking-inner{max-width:700px;margin:0 auto;text-align:center}
+  .booking-box{background:var(--green);border-radius:2px;padding:3rem 2.5rem;margin-top:2rem}
+  .booking-box h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--cream);font-weight:400;margin-bottom:0.5rem}
+  .booking-box p{color:rgba(250,246,239,0.7);font-size:0.85rem;margin-bottom:2rem;font-weight:300}
+  .booking-info-list{list-style:none;text-align:left;margin-bottom:2rem;display:inline-block}
+  .booking-info-list li{font-size:0.85rem;color:rgba(250,246,239,0.65);padding:0.35rem 0 0.35rem 1.25rem;font-weight:300;position:relative}
+  .booking-info-list li::before{content:'→';position:absolute;left:0;color:#c8922a;font-size:0.75rem}
+  .booking-widget-placeholder{background:rgba(0,0,0,0.2);border-radius:2px;padding:2rem;border:1px dashed rgba(250,246,239,0.2);text-align:center;color:rgba(250,246,239,0.4);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+  .phone-cta{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+  .phone-link{color:#f5a623;font-family:'Cormorant Garamond',serif;font-size:1.3rem;text-decoration:none}
+
+  footer{background:#0d2a1a;padding:3rem 2rem 1.5rem}
+  .footer-inner{max-width:1100px;margin:0 auto}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+  .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#f5a623;margin-bottom:0.75rem}
+  .footer-text{font-size:0.85rem;color:rgba(250,246,239,0.45);line-height:1.7;font-weight:300}
+  .footer-col h4{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,246,239,0.4);margin-bottom:1rem}
+  .footer-col p,.footer-col a{font-size:0.85rem;color:rgba(250,246,239,0.6);line-height:1.8;font-weight:300;text-decoration:none;display:block}
+  .footer-divider{border:none;border-top:0.5px solid rgba(255,255,255,0.08);margin:1.5rem 0}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  .footer-bottom p{font-size:0.75rem;color:rgba(250,246,239,0.25)}
+
+  @media(max-width:768px){
+    .nav-links{display:none}
+    .ham{display:flex}
+    .about-grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr}
+    .menu-nav{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+    .menu-tab{white-space:nowrap}
+  }
+
+  .fade-in{animation:fadeIn 0.5s ease forwards}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">Boteco da Silvania</div>
+    <div class="nav-links">
+      <a onclick="showPage('home')">Hem</a>
+      <a onclick="showPage('about')">Välkommen</a>
+      <a onclick="showPage('info')">Info</a>
+      <a onclick="showPage('menu')">Meny</a>
+      <a onclick="showPage('drinks')">Öl &amp; Dryck</a>
+      <a onclick="showPage('spirits')">Drinkar</a>
+      <a onclick="showPage('wine')">Vinlista</a>
+      <a onclick="showPage('buffet')">Buffémenyer</a>
+      <a onclick="showPage('booking')" class="nav-book">Boka bord</a>
+    </div>
+    <div class="ham" onclick="toggleMobile()" id="ham">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="showPage('home');closeMobile()">Hem</a>
+  <a onclick="showPage('about');closeMobile()">Välkommen</a>
+  <a onclick="showPage('info');closeMobile()">Info</a>
+  <a onclick="showPage('menu');closeMobile()">Meny</a>
+  <a onclick="showPage('drinks');closeMobile()">Öl &amp; Dryck</a>
+  <a onclick="showPage('spirits');closeMobile()">Spritdrycker &amp; Drinkar</a>
+  <a onclick="showPage('wine');closeMobile()">Vinlista</a>
+  <a onclick="showPage('buffet');closeMobile()">Buffémenyer</a>
+  <a onclick="showPage('booking');closeMobile()">Boka bord</a>
+</div>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="hero">
+    <div id="hero-bg-img" style="position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;transition:opacity 1s"></div>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(160deg,rgba(13,42,26,0.82) 0%,rgba(26,74,46,0.75) 40%,rgba(45,58,26,0.82) 100%)"></div>
+    <div class="hero-bg" style="z-index:2">
+      <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <g fill="white">
+          <ellipse cx="200" cy="100" rx="180" ry="60" transform="rotate(-30 200 100)"/>
+          <ellipse cx="1000" cy="300" rx="220" ry="70" transform="rotate(20 1000 300)"/>
+          <ellipse cx="600" cy="700" rx="200" ry="65" transform="rotate(-15 600 700)"/>
+          <ellipse cx="100" cy="500" rx="150" ry="50" transform="rotate(25 100 500)"/>
+          <ellipse cx="1100" cy="600" rx="180" ry="55" transform="rotate(-20 1100 600)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-content" style="position:relative;z-index:3">
+      <div class="hero-flag">
+        <div class="flag-dot" style="background:#009c3b"></div>
+        <div class="flag-dot" style="background:#ffdf00"></div>
+        <div class="flag-dot" style="background:#002776"></div>
+        <div class="flag-dot" style="background:#ffdf00"></div>
+        <div class="flag-dot" style="background:#009c3b"></div>
+      </div>
+      <h1>Välkommen till<br><em>Boteco da Silvania</em></h1>
+      <p>Äkta brasiliansk mat · Kungsholmen · Stockholm</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('menu')">Se menyn</button>
+        <button class="btn-secondary" onclick="showPage('booking')">Boka bord</button>
+      </div>
+    </div>
+    <div class="hours-bar" style="z-index:3">
+      <span>Öppet <strong>Onsdag–Lördag</strong> · <strong>16:30–22:00</strong> &nbsp;|&nbsp; Söndag–Tisdag stängt</span>
+    </div>
+  </div>
+
+  <div style="background:var(--cream);padding:4rem 2rem">
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;text-align:center">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#c8922a;font-weight:400">32</div>
+        <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);margin-top:0.25rem">Inomhusplatser</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#c8922a;font-weight:400">8</div>
+        <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);margin-top:0.25rem">Uteplatser</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#c8922a;font-weight:400">Ons–Lör</div>
+        <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);margin-top:0.25rem">Öppettider</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#c8922a;font-weight:400">&#x1F1E7;&#x1F1F7;</div>
+        <div style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text2);margin-top:0.25rem">Äkta brasiliansk mat</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#1a4a2e;padding:4rem 2rem;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="section-tag" style="color:#f5a623">Vår historia</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cream);font-weight:400;margin-bottom:1rem">En plats vid vattnet</h2>
+      <p style="color:rgba(250,246,239,0.7);font-weight:300;line-height:1.8;margin-bottom:1.5rem">På Kungsholms strand i Stockholm hittar du Boteco da Silvania — ett litet, personligt brasilianskt kök med stor kärlek till maten och gästerna. Här möts sydamerikanska smaker med stockholmsk mysighet.</p>
+      <button class="btn-secondary" onclick="showPage('about')">Läs mer om oss</button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="padding-top:60px">
+    <div class="page-section about-grid">
+      <div>
+        <div class="section-tag">Välkommen</div>
+        <h2 class="section-title">Mer än en restaurang</h2>
+        <p class="section-body">Boteco da Silvania är en liten, personlig restaurang med rötterna djupt planterade i Rio Grande do Sul, Brasilien. Silvania öppnade sin restaurang med en enkel idé: att dela med sig av äkta brasiliansk matkultur till Stockholmarna.</p>
+        <p class="section-body" style="margin-top:1rem">Vi lagar all mat från grunden, med råvaror vi noggrant väljer ut och recept vi bär med oss från Brasilien. Hos oss får du en upplevelse som är lika personlig som hemlagad mat — serverad i en varm, avslappnad miljö med utsikt mot vattnet.</p>
+        <div class="tagline">"Mer än en restaurang — en upplevelse"</div>
+        <button class="btn-primary" onclick="showPage('booking')" style="margin-top:2rem">Boka ditt bord</button>
+      </div>
+      <div class="about-imgs">
+        <div class="img-placeholder" style="background:#1a4a2e;grid-column:1/-1;aspect-ratio:16/9">
+          <img id="about-img-1" src="" alt="Boteco da Silvania restaurang" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:2px">
+        </div>
+        <div class="img-placeholder" style="background:#2d6b44">
+          <img id="about-img-2" src="" alt="Brasiliansk mat" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:2px">
+        </div>
+        <div class="img-placeholder" style="background:#c8922a">
+          <img id="about-img-3" src="" alt="Restaurangmiljö" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:2px">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="info-section" style="padding-top:60px">
+    <div class="page-section">
+      <div class="section-tag">Hitta oss</div>
+      <h2 class="section-title">Information &amp; kontakt</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <a class="map-placeholder" href="https://maps.google.com/?q=Kungsholms+strand+173+Stockholm" target="_blank" rel="noopener">
+            <span>Öppna karta ↗</span>
+          </a>
+          <h3>Adress</h3>
+          <div class="info-text"><strong>Boteco da Silvania</strong><br>Kungsholms strand 173<br>112 48 Stockholm</div>
+          <div class="info-text" style="margin-top:0.75rem">Tel: <a href="tel:0865081 28" style="color:var(--green);text-decoration:none">08-650 81 28</a><br>Mobil: <a href="tel:0709387264" style="color:var(--green);text-decoration:none">0709-38 72 64</a><br>E-post: <a href="/cdn-cgi/l/email-protection#52213b3e24333c3b337c21383d303e3d3f12303d2637313d3633213b3e24333c3b337c2137" style="color:var(--green);text-decoration:none;font-size:0.8rem"><span class="__cf_email__" data-cfemail="72011b1e04131c1b135c01181d101e1d1f32101d0617111d1613011b1e04131c1b135c0117">[email&#160;protected]</span></a></div>
+        </div>
+        <div class="info-card">
+          <h3>Öppettider</h3>
+          <table class="hours-table">
+            <tr><td>Onsdag</td><td>16:30–22:00</td></tr>
+            <tr><td>Torsdag</td><td>16:30–22:00</td></tr>
+            <tr><td>Fredag</td><td>16:30–22:00</td></tr>
+            <tr><td>Lördag</td><td>16:30–22:00</td></tr>
+            <tr class="closed"><td>Söndag</td><td>Stängt</td></tr>
+            <tr class="closed"><td>Måndag</td><td>Stängt</td></tr>
+            <tr class="closed"><td>Tisdag</td><td>Stängt</td></tr>
+          </table>
+          <div style="margin-top:1.25rem">
+            <h3>Betalning</h3>
+            <div class="pay-pills">
+              <span class="pill">Visa</span>
+              <span class="pill">Mastercard</span>
+              <span class="pill">American Express</span>
+              <span class="pill">Faktura*</span>
+            </div>
+            <p style="font-size:0.75rem;color:var(--text2);margin-top:0.5rem;font-style:italic">*Faktura — begär detta före besöket och uppge faktureringsuppgifter</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3>Vägbeskrivning</h3>
+          <div style="margin-bottom:1rem">
+            <div style="font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8922a;margin-bottom:0.4rem;font-weight:500">Buss linje 54</div>
+            <p class="info-text">Hållplats <em>Industrigatan</em> eller <em>Igeldammsgatan</em> — restaurangen ligger mitt emellan.</p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <div style="font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8922a;margin-bottom:0.4rem;font-weight:500">T-bana Fridhemsplan</div>
+            <p class="info-text">Gå in på Flemingatan mot Fridhemsgatan, sedan ca 300 m till Industrigatan och ned till Kungsholms strand. Ca 10 min promenad.</p>
+          </div>
+          <div>
+            <div style="font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8922a;margin-bottom:0.4rem;font-weight:500">T-bana Stadshagen (blå linje)</div>
+            <p class="info-text">Gå mot Mariedalsvägen ned till Kungsholms strand, sedan ca 300 m till höger.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div style="padding-top:60px">
+    <div class="menu-hero">
+      <h2>Matsedel</h2>
+      <p>Äkta brasiliansk mat — serveras vid bordet</p>
+    </div>
+    <div class="menu-nav">
+      <div class="menu-tab active" onclick="showMenuCat('salgados',this)">Salgados / Tapas</div>
+      <div class="menu-tab" onclick="showMenuCat('main',this)">Huvudrätter</div>
+      <div class="menu-tab" onclick="showMenuCat('dessert',this)">Efterrätter</div>
+    </div>
+    <div id="menu-photo-strip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-height:200px;overflow:hidden">
+      <img src="" alt="Camarão Alho" style="width:100%;height:200px;object-fit:cover;opacity:0;transition:opacity 0.8s;background:#1a4a2e">
+      <img src="" alt="Feijoada" style="width:100%;height:200px;object-fit:cover;opacity:0;transition:opacity 0.8s;background:#2d6b44">
+      <img src="" alt="Brigadeiro" style="width:100%;height:200px;object-fit:cover;opacity:0;transition:opacity 0.8s;background:#c8922a">
+      <img src="" alt="Caipirinha" style="width:100%;height:200px;object-fit:cover;opacity:0;transition:opacity 0.8s;background:#1a4a2e">
+    </div>
+    <div class="menu-content">
+      <div class="menu-note">Alla rätter serveras vid bordet. Vid sällskap över 8 personer — vänligen ring i förväg: 0709-38 72 64</div>
+
+      <div class="menu-cat active" id="cat-salgados">
+        <div class="menu-cat-title">Salgados / Tapas</div>
+        <div class="menu-cat-sub">Brasilianska snittar &amp; smårätter</div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Coxinha</h4><p>Kyckling &amp; kräm, friterad deg</p></div><div class="menu-price">85 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Pão de Queijo</h4><p>Brasilianskt ostbröd, nybakat</p></div><div class="menu-price">65 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Pastel de Carne</h4><p>Friterad pastej med kryddat nötkött</p></div><div class="menu-price">85 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Camarão Alho</h4><p>Räkor med vitlök &amp; olivolja</p></div><div class="menu-price">135 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Bolinho de Bacalhau</h4><p>Saltfiskbollar, klassisk recept</p></div><div class="menu-price">95 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Empanada Frango</h4><p>Bakad pirog med kyckling &amp; grönsaker</p></div><div class="menu-price">80 kr</div></div>
+      </div>
+
+      <div class="menu-cat" id="cat-main">
+        <div class="menu-cat-title">Huvudrätter</div>
+        <div class="menu-cat-sub">Brasilianska klassiker &amp; husmanskost</div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Feijoada</h4><p>Brasiliansk böngryta med fläsk, ris, farofa &amp; apelsin</p></div><div class="menu-price">195 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Frango com Quiabo</h4><p>Kyckling med okra, klassisk Mineiro-rätt</p></div><div class="menu-price">185 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Camarão Alho e Óleo</h4><p>Räkor i vitlök &amp; olivolja med ris</p></div><div class="menu-price">225 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Picadinho de Carne</h4><p>Kryddad nötfärs med ägg, potatis &amp; ris</p></div><div class="menu-price">185 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Moqueca de Peixe</h4><p>Brasiliansk fiskgryta med kokosmjölk &amp; dendeolja</p></div><div class="menu-price">215 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Frango Grelhado</h4><p>Grillad kyckling med chimichurri, ris &amp; bönor</p></div><div class="menu-price">175 kr</div></div>
+      </div>
+
+      <div class="menu-cat" id="cat-dessert">
+        <div class="menu-cat-title">Efterrätter</div>
+        <div class="menu-cat-sub">Söta avslutningar från Brasilien</div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Brigadeiro</h4><p>Klassisk brasiliansk chokladtryffel</p></div><div class="menu-price">55 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Pudim de Leite</h4><p>Brasiliansk crème caramel</p></div><div class="menu-price">75 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Mousse de Maracujá</h4><p>Passionsfruktsmousse</p></div><div class="menu-price">75 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Quindim</h4><p>Ägg &amp; kokosnöt-dessert, sötsyrlig</p></div><div class="menu-price">70 kr</div></div>
+        <div class="menu-item"><div class="menu-item-left"><h4>Kaffe</h4><p>Brasilianskt kaffe, extra starkt</p></div><div class="menu-price">35 kr</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRINKS -->
+<section id="drinks">
+  <div style="background:#f2ead8;padding-top:60px">
+    <div id="drinks-hero-img" style="height:260px;background-size:cover;background-position:center;opacity:0;transition:opacity 1s;background-color:#1a4a2e"></div>
+    <div class="page-section">
+      <div class="section-tag">Dryckeslista</div>
+      <h2 class="section-title">Öl &amp; Övrig dryck</h2>
+      <div class="drinks-grid">
+        <div class="drink-card">
+          <h3>Brasilianskt öl</h3>
+          <div class="drink-item"><span class="drink-name">Skol Lager</span><span class="drink-price">55 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Brahma Chopp</span><span class="drink-price">55 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Antarctica Original</span><span class="drink-price">60 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Bohemia Weiss</span><span class="drink-price">65 kr</span></div>
+        </div>
+        <div class="drink-card">
+          <h3>Öl på flaska</h3>
+          <div class="drink-item"><span class="drink-name">Carlsberg 33cl</span><span class="drink-price">50 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Heineken 33cl</span><span class="drink-price">55 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Norrlands Guld 33cl</span><span class="drink-price">50 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Alkoholfri öl 33cl</span><span class="drink-price">45 kr</span></div>
+        </div>
+        <div class="drink-card">
+          <h3>Alkoholfria drycker</h3>
+          <div class="drink-item"><span class="drink-name">Läsk / Mineralvatten</span><span class="drink-price">35 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Guaraná Antarctica</span><span class="drink-price">40 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Mango- / Passionsjuice</span><span class="drink-price">45 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Kaffe / Te</span><span class="drink-price">35 kr</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPIRITS -->
+<section id="spirits">
+  <div style="background:var(--cream);padding-top:60px">
+    <div class="page-section">
+      <div class="section-tag">Cocktails &amp; Sprit</div>
+      <h2 class="section-title">Spritdrycker &amp; Drinkar</h2>
+      <div class="drinks-grid">
+        <div class="drink-card caipirinha-card" style="overflow:hidden;padding:0">
+          <img id="caipirinha-img" src="" alt="Caipirinha" style="width:100%;height:160px;object-fit:cover;opacity:0;transition:opacity 0.8s;display:block;background:#1a4a2e">
+          <div style="padding:1.75rem">
+          <div class="feature-badge">Husets signatur</div>
+          <h3>Caipirinha</h3>
+          <div class="drink-item"><span class="drink-name">Klassisk Caipirinha</span><span class="drink-price">115 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Caipirinha Maracujá</span><span class="drink-price">125 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Caipirinha Morango</span><span class="drink-price">125 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Caipiroska (Vodka)</span><span class="drink-price">125 kr</span></div>
+          </div>
+        </div>
+        <div class="drink-card">
+          <h3>Brasilianska cocktails</h3>
+          <div class="drink-item"><span class="drink-name">Batida de Coco</span><span class="drink-price">110 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Batida de Morango</span><span class="drink-price">110 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Brazilian Mule</span><span class="drink-price">115 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Tropical Spritz</span><span class="drink-price">110 kr</span></div>
+        </div>
+        <div class="drink-card">
+          <h3>Spritdrycker</h3>
+          <div class="drink-item"><span class="drink-name">Cachaça 51 4cl</span><span class="drink-price">65 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Cachaça Sagatiba 4cl</span><span class="drink-price">75 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Vodka 4cl</span><span class="drink-price">65 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Rum 4cl</span><span class="drink-price">65 kr</span></div>
+          <div class="drink-item"><span class="drink-name">Whisky 4cl</span><span class="drink-price">80 kr</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WINE -->
+<section id="wine">
+  <div style="background:var(--cream);padding-top:60px">
+    <div id="wine-hero-img" style="height:260px;background-size:cover;background-position:center;opacity:0;transition:opacity 1s;background-color:#1a4a2e"></div>
+    <div class="page-section">
+      <h2 class="section-title">Vinlista</h2>
+      <div class="wine-partner"><strong>Dádivas Viner</strong> — Vi samarbetar med Dádivas för att erbjuda noggrant utvalda sydamerikanska viner som passar perfekt till brasiliansk matkultur.</div>
+      <div class="wine-cols">
+        <div class="wine-col">
+          <h3>Rött vin</h3>
+          <div class="wine-entry"><div class="wine-name">Malbec Reserva</div><div class="wine-origin">Mendoza, Argentina</div><div class="wine-prices"><span>95 kr <em>glas</em></span><span>345 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Tannat del Uruguay</div><div class="wine-origin">Canelones, Uruguay</div><div class="wine-prices"><span>90 kr <em>glas</em></span><span>325 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Carménère Gran Reserva</div><div class="wine-origin">Valle Central, Chile</div><div class="wine-prices"><span>100 kr <em>glas</em></span><span>365 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Cabernet Sauvignon</div><div class="wine-origin">Colchagua, Chile</div><div class="wine-prices"><span>95 kr <em>glas</em></span><span>345 kr <em>flaska</em></span></div></div>
+        </div>
+        <div class="wine-col">
+          <h3>Vitt vin</h3>
+          <div class="wine-entry"><div class="wine-name">Torrontés Fresco</div><div class="wine-origin">Salta, Argentina</div><div class="wine-prices"><span>90 kr <em>glas</em></span><span>325 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Sauvignon Blanc</div><div class="wine-origin">Casablanca, Chile</div><div class="wine-prices"><span>90 kr <em>glas</em></span><span>325 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Chardonnay Reserva</div><div class="wine-origin">Maule, Chile</div><div class="wine-prices"><span>95 kr <em>glas</em></span><span>340 kr <em>flaska</em></span></div></div>
+        </div>
+        <div class="wine-col">
+          <h3>Rosévin &amp; Mousserande</h3>
+          <div class="wine-entry"><div class="wine-name">Rosé de Malbec</div><div class="wine-origin">Mendoza, Argentina</div><div class="wine-prices"><span>90 kr <em>glas</em></span><span>320 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Espumante Brut</div><div class="wine-origin">Rio Grande do Sul, Brasilien</div><div class="wine-prices"><span>105 kr <em>glas</em></span><span>385 kr <em>flaska</em></span></div></div>
+          <div class="wine-entry"><div class="wine-name">Prosecco DOC</div><div class="wine-origin">Venetien, Italien</div><div class="wine-prices"><span>100 kr <em>glas</em></span><span>360 kr <em>flaska</em></span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUFFET -->
+<section id="buffet">
+  <div class="buffet-section" style="padding-top:60px">
+    <div id="buffet-hero-img" style="height:260px;background-size:cover;background-position:center;opacity:0;transition:opacity 1s;background-color:#0d2a1a"></div>
+    <div class="page-section">
+      <div class="section-tag">Buffémenyer</div>
+      <h2 class="section-title">Brasilianska bufféer</h2>
+      <p style="color:rgba(250,246,239,0.65);font-weight:300;max-width:560px">Båda bufféerna serveras direkt vid bordet. Vänligen ange önskad buffé i bokningskommentaren så vi kan förbereda er ett fantastiskt kvällsmål.</p>
+      <div class="buffet-cards">
+        <div class="buffet-card featured">
+          <div class="buffet-badge">Populärast</div>
+          <h3>Brasiliansk Buffé</h3>
+          <div class="buffet-min">Minst 8 personer</div>
+          <ul class="buffet-includes">
+            <li>Salgados / Tapas — ett urval av brasilianska snittar</li>
+            <li>Huvudrätter — flera rätter från hela menyn</li>
+            <li>Tillbehör — ris, bönor, farofa, vinaigrette</li>
+            <li>Efterrätter — brigadeiro, pudim &amp; mer</li>
+            <li>Kaffe ingår</li>
+            <li>Allt serveras vid bordet</li>
+          </ul>
+          <p class="buffet-note">Prisförfrågan — kontakta oss för offert</p>
+          <button class="buffet-btn" onclick="showPage('booking')">Boka Brasiliansk Buffé</button>
+        </div>
+        <div class="buffet-card">
+          <h3>Salgados / Tapas Buffé</h3>
+          <div class="buffet-min">Minst 4 personer</div>
+          <ul class="buffet-includes">
+            <li>Stort urval av brasilianska salgados</li>
+            <li>Varma &amp; kalla tapas</li>
+            <li>Bröd &amp; dipsåser</li>
+            <li>Serveras vid bordet</li>
+          </ul>
+          <p class="buffet-note">Prisförfrågan — kontakta oss för offert</p>
+          <button class="buffet-btn" onclick="showPage('booking')">Boka Salgados Buffé</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div style="background:var(--cream);padding-top:60px">
+    <div class="page-section booking-inner">
+      <div class="section-tag" style="text-align:center">Reservationer</div>
+      <h2 class="section-title" style="text-align:center">Boka bord</h2>
+      <div class="booking-box">
+        <h3>Välkommen att boka</h3>
+        <p>Bokningar bekräftas automatiskt om bord finns tillgängligt</p>
+        <div class="booking-widget-placeholder">
+          easyTableBooking.se — bokningswidget integreras här<br>
+          <span style="font-size:0.7rem;color:rgba(250,246,239,0.3);text-transform:none;letter-spacing:0">Välj antal gäster för att se tillgängliga datum</span>
+        </div>
+        <ul class="booking-info-list">
+          <li>Sällskap över 8 personer — ring 0709-38 72 64</li>
+          <li>Kolla menyn — min. antal gäster gäller för bufféer</li>
+          <li>Skriv gärna in er beställning i bokningskommentaren</li>
+          <li>Kan ni inte komma — avboka snarast möjligt</li>
+        </ul>
+        <div class="phone-cta">
+          <span style="font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,246,239,0.5)">Frågor?</span>
+          <a href="tel:0865081 28" class="phone-link">08-650 81 28</a>
+          <span style="color:rgba(250,246,239,0.3)">|</span>
+          <a href="tel:0709387264" class="phone-link">0709-38 72 64</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Boteco da Silvania</div>
+        <p class="footer-text">Äkta brasiliansk mat i hjärtat av Kungsholmen, Stockholm. Välkommen till oss vid vattnet.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <p>Kungsholms strand 173</p>
+        <p>112 48 Stockholm</p>
+        <a href="tel:0865081 28">08-650 81 28</a>
+        <a href="tel:0709387264">0709-38 72 64</a>
+      </div>
+      <div class="footer-col">
+        <h4>Öppettider</h4>
+        <p>Onsdag–Lördag</p>
+        <p style="color:#c8922a">16:30–22:00</p>
+        <p style="margin-top:0.5rem">Söndag–Tisdag</p>
+        <p>Stängt</p>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Boteco da Silvania &middot; Kungsholmen, Stockholm</p>
+      <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f7849e9b8196999e96d9849d98959b989ab79598839294989396849e9b8196999e96d98492">[email&#160;protected]</a></p>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var IMGS = {
+  hero:     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&h=900&fit=crop&q=80',
+  about1:   'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=450&fit=crop&q=80',
+  about2:   'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=400&fit=crop&q=80',
+  about3:   'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=400&h=400&fit=crop&q=80',
+  food1:    'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop&q=80',
+  food2:    'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop&q=80',
+  food3:    'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop&q=80',
+  food4:    'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=300&fit=crop&q=80',
+  drinks:   'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200&h=400&fit=crop&q=80',
+  caipiri:  'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&h=400&fit=crop&q=80',
+  wine:     'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1200&h=400&fit=crop&q=80',
+  buffet:   'https://images.unsplash.com/photo-1555244162-803834f70033?w=1200&h=400&fit=crop&q=80'
+};
+
+function loadImages(){
+  function setBg(id, url){ var el=document.getElementById(id); if(el){el.style.backgroundImage='url('+url+')';el.style.opacity='1';} }
+  function setSrc(id, url){ var el=document.getElementById(id); if(el){el.src=url;el.style.opacity='1';} }
+
+  setBg('hero-bg-img', IMGS.hero);
+  setSrc('about-img-1', IMGS.about1);
+  setSrc('about-img-2', IMGS.about2);
+  setSrc('about-img-3', IMGS.about3);
+  setBg('drinks-hero-img', IMGS.drinks);
+  setSrc('caipirinha-img', IMGS.caipiri);
+  setBg('wine-hero-img', IMGS.wine);
+  setBg('buffet-hero-img', IMGS.buffet);
+
+  var strip = document.getElementById('menu-photo-strip');
+  if(strip){
+    var imgs = strip.querySelectorAll('img');
+    var foodImgs = [IMGS.food1, IMGS.food2, IMGS.food3, IMGS.food4];
+    for(var i=0;i<imgs.length;i++){ imgs[i].src=foodImgs[i]; imgs[i].style.opacity='1'; }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadImages);
+
+function showPage(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  var el=document.getElementById(id);
+  if(el){el.classList.add('active');el.classList.add('fade-in');setTimeout(function(){el.classList.remove('fade-in')},500);}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleMobile(){
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMobile(){
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+function showMenuCat(id,tab){
+  document.querySelectorAll('.menu-cat').forEach(function(c){c.classList.remove('active');});
+  document.querySelectorAll('.menu-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('cat-'+id).classList.add('active');
+  tab.classList.add('active');
+}
+</script>
+</body>
+</html>
